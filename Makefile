@@ -23,69 +23,25 @@ PRJ_FFLAGS=
 
 PRJ_CFLAGS=
 
-# Auto-including AppGraphics libraries.
-PRJ_LFLAGS=-lappgraphics -lgdi32 -lcomdlg32 -lcomctl32 -luuid -loleaut32 -lole32
+PRJ_LFLAGS=
 
 FFLAGS=$(SPECIALFLAGS) $(OPTFLAGS) $(PRJ_FFLAGS) -Jmodules 
 
 CFLAGS=$(SPECIALFLAGS) $(OPTFLAGS) $(PRJ_CFLAGS)
 
-"build\control.o": ".\control.f90" "modules\m_globals.mod"
-	@echo Compiling .\control.f90
-	@$(FC) -c -o "build\control.o" $(FFLAGS) ".\control.f90"
-"modules\m_control.mod" : "build\control.o" .EXISTSONLY
-	@echo Compiling .\control.f90
-	@$(FC) -c -o "build\control.o" $(FFLAGS) ".\control.f90"
-
-"build\globals.o": ".\globals.f90" "modules\m_grid.mod"
-	@echo Compiling .\globals.f90
-	@$(FC) -c -o "build\globals.o" $(FFLAGS) ".\globals.f90"
-"modules\m_globals.mod" : "build\globals.o" .EXISTSONLY
-	@echo Compiling .\globals.f90
-	@$(FC) -c -o "build\globals.o" $(FFLAGS) ".\globals.f90"
-
-"build\grid.o": ".\grid.f90"
-	@echo Compiling .\grid.f90
-	@$(FC) -c -o "build\grid.o" $(FFLAGS) ".\grid.f90"
-"modules\m_grid.mod" : "build\grid.o" .EXISTSONLY
-	@echo Compiling .\grid.f90
-	@$(FC) -c -o "build\grid.o" $(FFLAGS) ".\grid.f90"
-
-"build\main.o": ".\main.f90" "modules\m_control.mod" "modules\m_globals.mod" "modules\m_grid.mod" "modules\m_screen.mod"
-	@echo Compiling .\main.f90
-	@$(FC) -c -o "build\main.o" $(FFLAGS) ".\main.f90"
-
-"build\screen.o": ".\screen.f90" "modules\m_control.mod" "modules\m_grid.mod"
-	@echo Compiling .\screen.f90
-	@$(FC) -c -o "build\screen.o" $(FFLAGS) ".\screen.f90"
-"modules\m_screen.mod" : "build\screen.o" .EXISTSONLY
-	@echo Compiling .\screen.f90
-	@$(FC) -c -o "build\screen.o" $(FFLAGS) ".\screen.f90"
-
-
-"build\sf_default_resource.res": "build\sf_default_resource.rc"
-	@echo Processing default resource
-	@$(WRC) build\sf_default_resource.rc $(RCFLAGS) -o build\sf_default_resource.res
+"build\namer.o": ".\namer.f90"
+	@echo Compiling .\namer.f90
+	@$(FC) -c -o "build\namer.o" $(FFLAGS) ".\namer.f90"
 
 clean: .SYMBOLIC
-	@echo Deleting build\control.o and related files
-	@$(RM) "build\control.o" "modules\m_control.mod" "modules\m_control.smod"
-	@echo Deleting build\globals.o and related files
-	@$(RM) "build\globals.o" "modules\m_globals.mod" "modules\m_globals.smod"
-	@echo Deleting build\grid.o and related files
-	@$(RM) "build\grid.o" "modules\m_grid.mod" "modules\m_grid.smod"
-	@echo Deleting build\main.o and related files
-	@$(RM) "build\main.o"
-	@echo Deleting build\screen.o and related files
-	@$(RM) "build\screen.o" "modules\m_screen.mod" "modules\m_screen.smod"
-	@echo Deleting default icon resource
-	@$(RM) "build\sf_default_resource.res"
-	@echo Deleting life.exe
-	@$(RM) "life.exe"
+	@echo Deleting build\namer.o and related files
+	@$(RM) "build\namer.o"
+	@echo Deleting target.exe
+	@$(RM) "target.exe"
 
-"life.exe":  "build\control.o" "build\globals.o" "build\grid.o" "build\main.o" "build\screen.o" "build\sf_default_resource.res" "build\conway.prj.target"
-	@echo Generating life.exe
-	@$(FC) -o "life.exe" -static -mwindows "build\control.o" "build\globals.o" "build\grid.o" "build\main.o" "build\screen.o" "build\sf_default_resource.res" $(LDIR) $(PRJ_LFLAGS)
+"target.exe":  "build\namer.o" "build\tuto.prj.target"
+	@echo Generating target.exe
+	@$(FC) -o "target.exe" -static "build\namer.o" $(LDIR) $(PRJ_LFLAGS)
 
-all: "life.exe" .SYMBOLIC
+all: "target.exe" .SYMBOLIC
 
