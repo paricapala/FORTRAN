@@ -5,6 +5,9 @@
     "Files":[{
         "filename":".\\namer.f90",
         "enabled":"1"
+      },{
+        "filename":".\\sum.f90",
+        "enabled":"1"
       }]
   },
   "Name":"tuto (target.exe)",
@@ -20,8 +23,8 @@
     "Windows GUI":0,
     "File Options":{
       "Library Directories":["Default Add-On Directory"],
-      "Build Directory":"build",
-      "Module Directory":"modules",
+      "Build Directory":".\\build",
+      "Module Directory":".\\modules",
       "Include Directories":["Default Add-On Include Directory"]
     },
     "Target":"target.exe",
